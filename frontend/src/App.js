@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>i am welcome to my three tier app</h1>
+      <h1>welcome to my three tier app</h1>
       <p>this app contains three tier application</p>
       <p>react frontend , nodejs backend ,mongoose db</p>
       <h2>DevOps Demo App</h2>
