@@ -40,9 +40,27 @@ jobs:
       - name: Build frontend image
         run: docker build -t rajesh00007/frontend:latest ./frontend
 
+      #trivyscan for frontend
+      - name: Run Trivy scan (frontend)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: 'rajesh00007/frontend:latest'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+      
+      #trivy scan for backend    
       # Build backend image
       - name: Build backend image
         run: docker build -t rajesh00007/backend:latest ./backend
+
+      - name: Run Trivy scan (backend)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: 'rajesh00007/backend:latest'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
 
       # Push images
       - name: Push frontend
