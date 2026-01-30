@@ -32,6 +32,9 @@ function App() {
 
   return (
     <div style={{ padding: 20 }}>
+      <h1> welcome to my three tier app</h1>
+      <p>this app contains three tier application</p>
+      <p>react frontend , nodejs backend ,mongoose db</p>
       <h2>DevOps Demo App</h2>
 
       <input
@@ -40,14 +43,14 @@ function App() {
         placeholder="Item name"
       />
 
-      <button onClick={addItem}>Add</button>
+      <button style={{color:"white", backgroundColor: "green"}} onClick={addItem}>Add</button>
 
       <ul>
         {items.map((item) => (
           <li key={item._id}>
             {item.name}
             <button
-              style={{ marginLeft: 10 }}
+              style={{ marginLeft: 10, color:"white" , backgroundColor: "red" }}
               onClick={() => deleteItem(item._id)}
             >
               Delete
