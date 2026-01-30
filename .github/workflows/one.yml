@@ -33,7 +33,7 @@ jobs:
 
       # Push images
       - name: Push frontend
-        run: docker push <dockerhub-user>/frontend:latest
+        run: docker push rajesh00007/frontend:latest
 
       - name: Push backend
-        run: docker push <dockerhub-user>/backend:latest
+        run: docker push rajesh00007/backend:latest
