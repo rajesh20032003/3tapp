@@ -1,0 +1,24 @@
+name: app pipeline
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+      - name: install dep
+        run: npm run install
+      - name: run npm ci
+        run: npm run ci
+      - name: build code
+        run: npm run build
+      - name: printing content
+        run: ls -R
