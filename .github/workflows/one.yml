@@ -7,18 +7,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
-      - name: set up node
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24.x
-      - name: install dep
-        run: npm run install
-      - name: run npm ci
-        run: npm run ci
-      - name: build code
+          node-version: 24
+
+      # ---------- Frontend ----------
+      - name: Install frontend deps
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
         run: npm run build
-      - name: printing content
+
+      # ---------- Backend ----------
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci
+
+      - name: Show project files
         run: ls -R
