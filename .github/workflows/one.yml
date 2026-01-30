@@ -5,13 +5,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  docker-build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      # Enable Docker buildx
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Login to DockerHub
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Build frontend image
       - name: Build frontend image
-        run: docker build -t user/frontend ./frontend
+        run: docker build -t rajesh00007/frontend:latest ./frontend
 
+      # Build backend image
       - name: Build backend image
-        run: docker build -t user/backend ./backend
+        run: docker build -t rajesh00007/backend:latest ./backend
+
+      # Push images
+      - name: Push frontend
+        run: docker push <dockerhub-user>/frontend:latest
+
+      - name: Push backend
+        run: docker push <dockerhub-user>/backend:latest
