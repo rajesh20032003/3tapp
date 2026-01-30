@@ -1,0 +1,25 @@
+- hosts: ec2
+  become: yes   # Run as sudo
+  tasks:
+    - name: Update system
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add user to docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes
+# add docker compose too 

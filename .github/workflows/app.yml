@@ -26,6 +26,7 @@ jobs:
 
       - run: npm run lint
         working-directory: frontend
+        continue-on-error: false
 
       # Backend lint
       - run: npm ci
@@ -33,6 +34,7 @@ jobs:
 
       - run: npm run lint
         working-directory: backend
+        continue-on-error: false
 
       # Enable Docker buildx
       - name: Setup Docker Buildx
