@@ -18,7 +18,14 @@ jobs:
           node-version: 24
 
       # ---------- Frontend ----------
+      - name: cache deps
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: frontend/package-lock.json
+          key: node-modules-${{hashFiles('frontend/package-lock.json')}}
       - name: Install frontend deps
+        if: steps.cache.outputs.cache-hit != 'true'
         working-directory: frontend
         run: npm ci
 
