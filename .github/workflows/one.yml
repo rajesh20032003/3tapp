@@ -12,12 +12,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: testing linting frontend
-        run: npm run lint
+      - run: npm ci
         working-directory: frontend
 
-      - name: testing linting backend
-        run: npm run lint
+      - run: npm run lint
+        working-directory: frontend
+
+      # Backend lint
+      - run: npm ci
+        working-directory: backend
+
+      - run: npm run lint
         working-directory: backend
 
       # Enable Docker buildx
