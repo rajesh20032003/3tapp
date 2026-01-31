@@ -116,5 +116,8 @@ jobs:
           echo "[app]" > inventory.ini
           echo "$IP ansible_user=ubuntu ansible_ssh_private_key_file=server.pem" >> inventory.ini
 
+      -  name: Disable SSH host checking
+         run: echo "ANSIBLE_HOST_KEY_CHECKING=False" >> $GITHUB_ENV
+
       - name: Deploy app
         run: ansible-playbook -i inventory.ini terraform/deploy.yml
