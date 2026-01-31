@@ -9,16 +9,16 @@ services:
       - mongo-data:/data/db
 
   backend:
-    build: ./backend
+    image: rajesh00007/backend:latest
     ports:
       - "5000:5000"
     depends_on:
       - mongo
 
   frontend:
-    build: ./frontend
+    image: rajesh00007/frontend:latest
     ports:
-      - "3000:80"
+      - "80:80"
     depends_on:
       - backend
 

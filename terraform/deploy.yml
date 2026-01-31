@@ -14,11 +14,11 @@
         dest: /home/ubuntu/app/docker-compose.yml
 
     - name: Pull latest images
-      command: docker-compose pull
+      command: /usr/local/bin/docker-compose pull
       args:
         chdir: /home/ubuntu/app
 
     - name: Restart containers
-      command: docker-compose up -d
+      command: /usr/local/bin/docker-compose up -d
       args:
         chdir: /home/ubuntu/app
