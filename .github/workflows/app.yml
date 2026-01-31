@@ -99,10 +99,10 @@ jobs:
         working-directory: terraform
         run: terraform apply -refresh-only -auto-approve
 
-      - name: Create SSH key
-        run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > server.pem
-          chmod 400 server.pem
+      -  name: Create SSH key
+         run: |
+            printf "%s" "${{ secrets.EC2_SSH }}" > server.pem
+            chmod 400 server.pem
 
       - name: Get EC2 IP
         working-directory: terraform
@@ -118,6 +118,8 @@ jobs:
 
       -  name: Disable SSH host checking
          run: echo "ANSIBLE_HOST_KEY_CHECKING=False" >> $GITHUB_ENV
+    
+
 
       - name: Deploy app
         run: ansible-playbook -i inventory.ini terraform/deploy.yml
