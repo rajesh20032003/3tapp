@@ -27,5 +27,8 @@ jobs:
       - name: Terraform init
         run: terraform init
 
-      - name: Terraform apply
+      - name: Terraform destroy
         run: terraform destroy -auto-approve
+
+      - name: update
+        run: echo "destroy successfull"
