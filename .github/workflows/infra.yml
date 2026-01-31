@@ -38,5 +38,8 @@ jobs:
       - name: Install Ansible
         run: sudo apt install ansible -y
 
+      - name: Disable SSH host checking
+        run: echo "ANSIBLE_HOST_KEY_CHECKING=False" >> $GITHUB_ENV
+
       - name: Run Ansible install
         run: ansible-playbook -i inventory.ini install.yml
