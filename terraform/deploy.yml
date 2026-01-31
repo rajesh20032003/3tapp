@@ -1,21 +1,24 @@
 - hosts: app
   become: yes
 
-  vars:
-    docker_user: YOUR_DOCKER_USERNAME
-    docker_pass: YOUR_DOCKER_TOKEN
-
   tasks:
 
-    - name: Docker login
-      docker_login:
-        username: "{{ secrets.DOCKER_USERNAME }}"
-        password: "{{ secrets.DOCKER_PASSWORD }}"
+    - name: Create app folder
+      file:
+        path: /home/ubuntu/app
+        state: directory
 
-    - name: Copy docker compose file
+    - name: Copy docker-compose
       copy:
-        src: ../docker-compose.yml
-        dest: /home/ubuntu/docker-compose.yml
+        src: docker-compose.yml
+        dest: /home/ubuntu/app/docker-compose.yml
 
-    - name: Deploy containers
-      command: docker compose up -d
+    - name: Pull latest images
+      command: docker-compose pull
+      args:
+        chdir: /home/ubuntu/app
+
+    - name: Restart containers
+      command: docker-compose up -d
+      args:
+        chdir: /home/ubuntu/app

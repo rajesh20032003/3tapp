@@ -35,22 +35,6 @@ jobs:
         working-directory: backend
         continue-on-error: false
 
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dsonar.projectKey=3tapp
-            -Dsonar.sources=.
-            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
-            
-      - name: SonarQube Quality Gate
-        uses: sonarsource/sonarqube-quality-gate-action@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
 
       # Enable Docker buildx
       - name: Setup Docker Buildx
@@ -96,3 +80,22 @@ jobs:
 
       - name: Push backend
         run: docker push rajesh00007/backend:latest
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform init
+        working-directory: terraform
+        run: terraform init
+
+      - name: Generate inventory
+        working-directory: terraform
+        run: terraform apply -refresh-only -auto-approve
+
+      - name: Fix SSH key permissions
+        working-directory: terraform
+        run: chmod 400 server.pem
+
+      - name: Deploy app
+        working-directory: terraform
+        run: ansible-playbook -i inventory.ini deploy.yml
