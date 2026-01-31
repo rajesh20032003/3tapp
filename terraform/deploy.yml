@@ -10,7 +10,7 @@
 
     - name: Copy docker-compose
       copy:
-        src: docker-compose.yml
+        src: ../docker-compose.yml
         dest: /home/ubuntu/app/docker-compose.yml
 
     - name: Pull latest images
