@@ -12,9 +12,15 @@
       copy:
         src: ../docker-compose.yml
         dest: /home/ubuntu/app/docker-compose.yml
+        force: yes
 
     - name: Pull latest images
       command: /usr/local/bin/docker-compose pull
+      args:
+        chdir: /home/ubuntu/app
+
+    - name: Remove old containers
+      command: /usr/local/bin/docker-compose down
       args:
         chdir: /home/ubuntu/app
 
