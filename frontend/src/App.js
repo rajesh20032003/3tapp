@@ -5,7 +5,7 @@ function App() {
   const [name, setName] = useState("");
 
   const loadItems = async () => {
-    const res = await fetch("http://localhost:5000/items");
+    const res = await fetch("http://3.108.68.157:5000/items");
     setItems(await res.json());
   };
 
@@ -14,7 +14,7 @@ function App() {
   }, []);
 
   const addItem = async () => {
-    await fetch("http://localhost:5000/items", {
+    await fetch("http://3.108.68.157:5000/items", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
@@ -24,7 +24,7 @@ function App() {
   };
 
   const deleteItem = async (id) => {
-    await fetch(`http://localhost:5000/items/${id}`, {
+    await fetch(`http://3.108.68.157:5000/items/${id}`, {
       method: "DELETE",
     });
     loadItems();
