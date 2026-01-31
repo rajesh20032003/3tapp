@@ -1,7 +1,6 @@
 name: app pipeline
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
@@ -35,6 +34,22 @@ jobs:
       - run: npm run lint
         working-directory: backend
         continue-on-error: false
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=3tapp
+            -Dsonar.sources=.
+            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
+              
+      - name: SonarQube Quality Gate
+        uses: sonarsource/sonarqube-quality-gate-action@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
       # Enable Docker buildx
