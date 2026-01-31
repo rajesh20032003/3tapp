@@ -35,6 +35,9 @@ jobs:
       - name: Terraform apply
         run: terraform apply -auto-approve
 
+      - name: set permission
+        run: chmod 400 server.pem
+
       - name: Install Ansible
         run: sudo apt install ansible -y
 
