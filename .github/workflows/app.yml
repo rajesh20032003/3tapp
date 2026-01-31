@@ -101,8 +101,20 @@ jobs:
 
       - name: Create SSH key
         run: |
-          echo "${{ secrets.EC2_SSH }}" > server.pem
+          echo "${{ secrets.EC2_SSH_KEY }}" > server.pem
           chmod 400 server.pem
-      - name: Deploy app
+
+      - name: Get EC2 IP
         working-directory: terraform
-        run: ansible-playbook -i inventory.ini deploy.yml
+        run: |
+          terraform init
+          terraform output -raw public_ip > ip.txt
+
+      - name: Create inventory
+        run: |
+          IP=$(cat terraform/ip.txt)
+          echo "[app]" > inventory.ini
+          echo "$IP ansible_user=ubuntu ansible_ssh_private_key_file=server.pem" >> inventory.ini
+
+      - name: Deploy app
+        run: ansible-playbook -i inventory.ini terraform/deploy.yml
